@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --body-color: #e94a2b;
+  --header-color: #e53935;
+  --principal-text-color: #212121;
+  --secondaire-text-color: #6d4c41;
+  --boutton-color: #fbc02d;
+  --nav-a-color: #212121;
+  --boutton-secondaire-color: #f9a825;
+  --height-header: 100px;
+  --nav-height: 50px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: var(--body-color);
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  color: #fff;
+  background-color: var(--header-color);
+  height: var(--height-header);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.4);
+}
+
+.header--content {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: var(--height-header);
+  margin-inline: 20px;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  height: var(--height-header);
+}
+
+nav {
+  background: #fafafa;
+  width: 100%;
+  height: var(--nav-height);
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  z-index: 1000;
+  top: 100px;
+}
+
+.commander-button {
+  background: var(--header-color);
+  color: #fff !important;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+header nav a {
+  color: #fff;
+  margin-left: 1rem;
+  text-decoration: none;
+  padding: 10px;
+  &:hover {
+    background: var(--boutton-color);
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
+#big--home_section {
+  background: url(/assets/images/bigbackground.png);
+  width: 100%;
+  height: 350px;
+  position: relative;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#big--home_section > .big--home_filtre {
+  background: #ffffffb8;
+  position: absolute;
+  width: 100%;
+  height: 350px;
+  text-align: center;
+}
+
+.big--home_filtre h1 {
+  color: #212121;
+  font-size: 2rem;
+}
+
+.big--home_filtre h2 {
+  color: #212121;
+  font-size: 1rem;
+  margin-top: 20px;
+  font-weight: 400;
+}
+
+.big--home_filtre h1,
+h2 {
+  color: #212121;
+}
+
+.big--home_textdisposition {
+  margin-top: 60px;
+  width: 100%;
+}
+
+.big--home_textdisposition_second {
+  margin-top: 110px;
+  width: 100%;
+  display: none;
+}
+
+.big--home_textdisposition button {
+  background: var(--header-color);
+  padding: 10px 60px;
+  border: none;
+  border-radius: 3px;
+  margin-top: 30px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  font-style: normal;
+  font-size: 1em;
+  transition: all 0.2s;
+  animation: topBottom 0.5s alternate infinite;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s;
+    margin-top: 29px;
+    animation-play-state: paused;
+  }
+}
+
+.nav--cta_disposition {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  gap: 40px;
+}
+
+.nav--cta_disposition a {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--nav-a-color);
+  text-transform: uppercase;
+  padding: 10px;
+  padding: 13.5px;
+  font-size: 0.9em;
+  &:hover {
+    background: var(--boutton-secondaire-color);
+    padding: 13.5px;
+    color: #fff;
+  }
+}
+
+@keyframes topBottom {
+  0% {
+    transition: all 0.2s;
+    margin-top: 30px;
+  }
+
+  100% {
+    transition: all 0.2s;
+    margin-top: 27px;
+  }
+}
+
+#nos-restaurants_section {
+  background: url(/assets/images/noustrouver.png);
+  width: 100%;
+  background-size: contain;
+  height: 100vh;
+}
+
+@media screen and (min-width: 760px) {
+  .big--home_textdisposition {
+    margin-top: 90px;
+  }
+}
+
+@media screen and (min-width: 980px) {
+  .nav--cta_disposition {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    gap: 40px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+}
