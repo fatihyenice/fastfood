@@ -15,9 +15,17 @@
 
     <div class="jecommande"></div>
 
+    <div id="modalcommande">
+        <div id="modalcommande--droite">
+            <div class="modalcommande-close">
+                <i class="ri-close-line"></i>
+            </div>
+        </div>
+    </div>
+
     <div class="all-header">
         <header>
-            <div class="logo"><i class="ri-service-bell-line"></i> SnackExpress</div>
+            <div class="logo">🍔 SnackExpress</div>
         </header>
 
         <nav>
@@ -39,13 +47,42 @@
             <div class="big--home_textdisposition">
                 <h1>Bienvenue chez SnackExpress </h1>
                 <h2>Le goût rapide, frais et savoureux à chaque bouchée !</h2>
-                <button type="button">VOIR LES MENUS <i class="ri-file-list-3-line"></i></button>
+                <a href="#nos-restaurants_section"><button type="button">VOIR LES MENUS <i class="ri-file-list-3-line"></i></button></a>
             </div>
         </div>
     </section>
 
     <section id="nos-restaurants_section">
-        dd
+        <h2>Une petite ou une grosse faim ? 🍔</h2>
+        <div class="container--menus">
+            <div class="menus">
+                <div class="menus--image" style="background-image: url(https://png.pngtree.com/png-clipart/20240328/original/pngtree-fresh-sandwich-fast-food-png-image_14700088.png) !important;"></div>
+                <div class="menus--title">
+                    Sandwich au jambon
+                </div>
+            </div>
+
+            <div class="menus">
+                <div class="menus--image" style="background-image: url(https://static.vecteezy.com/system/resources/previews/039/651/892/non_2x/ai-generated-chicken-shawarma-wrap-isolated-on-transparent-background-png.png) !important;"></div>
+                <div class="menus--title">
+                    Wrap kebab
+                </div>
+            </div>
+
+            <div class="menus">
+                <div class="menus--image" style="background-image: url(https://lechalet-chassieu.fr/137-large_default/sandwich-le-classic-merguez.jpg) !important;"></div>
+                <div class="menus--title">
+                    Pain Merguez
+                </div>
+            </div>
+
+            <div class="menus">
+                <div class="menus--image" style="background-image: url(https://png.pngtree.com/png-clipart/20240328/original/pngtree-fresh-sandwich-fast-food-png-image_14700088.png) !important;"></div>
+                <div class="menus--title">
+                    Sandwich au jambon
+                </div>
+            </div>
+        </div>
     </section>
 </body>
 

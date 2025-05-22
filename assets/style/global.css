@@ -19,6 +19,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -39,7 +40,6 @@ header {
   border-radius: 0 0 50px 0;
   box-shadow: 0px 0px 5px #000;
   position: relative;
-  z-index: 9999999;
   &:hover {
     cursor: pointer;
     opacity: 0.7;
@@ -154,8 +154,6 @@ nav {
   font-family: "Chewy", cursive;
   color: var(--principal-text-color);
   font-size: 2rem;
-  transform: rotate(-3deg);
-  animation: rotate 2s alternate infinite;
   user-select: none;
 }
 
@@ -239,6 +237,83 @@ nav {
   }
 }
 
+.container--menus {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 40px;
+  margin-inline: 50px;
+}
+
+.menus {
+  background: #fff;
+  width: 100%;
+  padding-bottom: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  &:hover {
+    transition: all 0.2s;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+}
+
+#nos-restaurants_section h2 {
+  margin: 50px;
+  font-weight: bold;
+  font-family: "Chewy", cursive;
+  color: var(--principal-text-color);
+  font-size: 1.4em;
+}
+
+.decalage-gauche {
+  transform: translateX(-30vw);
+  transition: all 0.5s;
+}
+
+#modalcommande {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+}
+
+#modalcommande--droite {
+  background: #fff;
+  width: 30vw;
+  height: 100%;
+  position: fixed;
+  right: -30vw;
+  top: 0;
+  padding: 10px;
+  z-index: 99999;
+}
+
+#modalcommande-close {
+  float: right;
+  color: #fff;
+  font-size: 2em;
+}
+
+.menus--image {
+  width: 100%;
+  height: 300px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.menus--title {
+  font-size: 1.3em;
+  color: var(--secondaire-text-color);
+  text-align: center;
+}
+
 /* RESPONSIVE DESIGN */
 @media (min-width: 980px) {
   header {
@@ -247,6 +322,21 @@ nav {
 
   nav {
     width: 100%;
+  }
+
+  #nos-restaurants_section h2 {
+    margin: 50px;
+    font-weight: 500;
+    color: var(--principal-text-color);
+    font-size: 2em;
+  }
+
+  .container--menus {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+    margin-inline: 50px;
   }
 
   .icon-burger {
@@ -284,7 +374,13 @@ nav {
   .big--home_filtre h1 {
     font-size: 4rem;
     font-weight: 500;
-    animation: rotate 2s alternate infinite;
+  }
+  .container--menus {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+    margin-inline: 50px;
   }
 }
 
