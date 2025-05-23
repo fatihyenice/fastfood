@@ -15,6 +15,9 @@
 </head>
 
 <body>
+    <div class="modal-loading" id="loader">
+        <div class="spinner"></div>
+    </div>
 
     <?php require_once "header.html.php"; ?>
 
@@ -42,39 +45,27 @@
         <section id="nos-restaurants_section">
             <h2>Une petite ou une grosse faim ? 🍔</h2>
             <div class="container--menus">
-                <div class="menus" data-aos="zoom-in">
-                    <div class="menus--image" style="background-image: url(https://png.pngtree.com/png-clipart/20240328/original/pngtree-fresh-sandwich-fast-food-png-image_14700088.png) !important;"></div>
-                    <div class="menus--title">
-                        Sandwich au jambon
+                <?php
+                foreach ($afficherProduits as $produit) {
+                ?>
+                    <div class="menus" data-aos="zoom-in" data-id-produit="<?= hsc($produit['id_produits']); ?>">
+                        <div class="menus--image" style="background-image: url(<?= hsc($produit['urlimage_produits']); ?>) !important;"></div>
+                        <div class="menus--title">
+                            <span><?= hsc($produit['nom_produits']); ?></span>
+                            <span class="menus--prix"><?= hsc($produit['prix_produits']); ?>€</span>
+                        </div>
                     </div>
-                </div>
-
-                <div class="menus" data-aos="zoom-in">
-                    <div class="menus--image" style="background-image: url(https://static.vecteezy.com/system/resources/previews/039/651/892/non_2x/ai-generated-chicken-shawarma-wrap-isolated-on-transparent-background-png.png) !important;"></div>
-                    <div class="menus--title">
-                        Wrap kebab
-                    </div>
-                </div>
-
-                <div class="menus" data-aos="zoom-in">
-                    <div class="menus--image" style="background-image: url(https://lechalet-chassieu.fr/137-large_default/sandwich-le-classic-merguez.jpg) !important;"></div>
-                    <div class="menus--title">
-                        Pain Merguez
-                    </div>
-                </div>
-
-                <div class="menus" data-aos="zoom-in">
-                    <div class="menus--image" style="background-image: url(https://png.pngtree.com/png-clipart/20240328/original/pngtree-fresh-sandwich-fast-food-png-image_14700088.png) !important;"></div>
-                    <div class="menus--title">
-                        Sandwich au jambon
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </section>
     </section>
 
     <section id="order" class="page hidden">
         Je commande
+    </section>
+
+    <section id="searchresto" class="page hidden">
+        Chercher un restaurant
     </section>
 </body>
 

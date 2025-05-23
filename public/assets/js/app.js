@@ -1,8 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     AOS.init(); 
 
-    const pages = Array.from(document.querySelectorAll(".page")).map(section => section.id);
-    console.log(pages);
+    const pages = Array.from(document.querySelectorAll(".page")).map(section => section.id); 
+    const loader = document.getElementById('loader');
+
+    function showLoader(duration = 500) {
+        loader.style.display = 'flex';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, duration);
+    }
 
     function changePage(NameOfSection){
         if(pages.includes(NameOfSection)){
@@ -11,11 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
              
             document.getElementById(NameOfSection).classList.remove("hidden");  
-        }else{
-            console.log("Page inexistante !");
-        }
-      
+        }  
     }
+    
     function setupNavigation() {
         const links = document.querySelectorAll("[data-page]");
         links.forEach(link => {
@@ -28,8 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleHashChange() {
-        const currentPage = location.hash.replace("#", "") || "home";
-        changePage(currentPage);
+        showLoader(200);  
+        const currentPage = location.hash.replace("#", "") || pages[0];
+        setTimeout(() => {
+            changePage(currentPage);
+        }, 200);
     }
  
     window.addEventListener("hashchange", handleHashChange);

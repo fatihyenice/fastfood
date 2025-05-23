@@ -6,7 +6,7 @@
     <nav>
         <div class="nav--cta_disposition">
             <a href="" data-page="home">Accueil</a>
-            <a href="">Trouver un resto</a>
+            <a href="" data-page="searchresto">Trouver un resto</a>
             <a href="">Qui sommes nous ?</a>
             <a href="">Contact</a>
             <a href="" class="commander-button" data-page="order">Commander</a>
