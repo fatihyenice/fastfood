@@ -26,6 +26,10 @@ if (!empty($_POST['id-produits'])) {
                 <div class="menu-detail">
                     <h1><?= hsc($recupererProduits['nom_produits']); ?></h1>
                     <p><?= hsc($recupererProduits['description_produits']); ?></p>
+
+                    <div class="btn-ajouterpanier">
+                        Ajouter au panier
+                    </div>
                 </div>
             </div>
 

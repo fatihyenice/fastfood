@@ -58,6 +58,7 @@
     </section>
 
     <?php require_once "page_detail_menu.php"; ?>
+    <?php require_once "page_nosproduits.php"; ?>
     <?php require_once "page_commandes.php"; ?>
     <?php require_once "page_cherche_resto.php"; ?>
 </body>

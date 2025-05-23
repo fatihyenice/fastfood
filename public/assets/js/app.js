@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function rechargeProduitsAccueil(){
-        fetch("/fetch/rechargeProduits.php")
+        fetch("/fetch/refresh/refreshProduits.php")
         .then(response => response.text())
         .then(data => {
             document.querySelector(".container--menus").innerHTML = data;
