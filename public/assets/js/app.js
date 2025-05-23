@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loader.style.display = 'none';
             if (scrollToTop) {
                 window.scrollTo({
-                    top: 0,
+                    top: -1000,
                     behavior: "smooth",
                 });
             }
@@ -46,15 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
         setTimeout(() => {
             changePage(currentPage);
-            rechargeProduitsHome();
+            rechargeProduitsAccueil();
         }, 200);
     }
 
-    function rechargeProduitsHome(){
+    function rechargeProduitsAccueil(){
         fetch("/fetch/rechargeProduits.php")
         .then(response => response.text())
         .then(data => {
             document.querySelector(".container--menus").innerHTML = data;
+            menuAccueil();
         });
     }
  
@@ -63,4 +64,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialisation
     setupNavigation();
     handleHashChange();
+
+    function menuAccueil(){
+        const listMenuAccueil = document.querySelectorAll("#home .menus"); 
+        listMenuAccueil.forEach((menu) => {
+            menu.addEventListener('click', () => { 
+                showLoader(200); 
+                setTimeout(function(){
+                    const form = new FormData();
+                    form.append("id-produits", menu.getAttribute("data-id-produit"));
+
+                    fetch("/fetch/recupererDetailProduits.php", {
+                        method: "POST",
+                        body: form,
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("detail-menu").innerHTML = data; 
+                        backArriere();
+                    });
+                    location.hash = "detail-menu";
+                }, 300);    
+            });
+        })
+    }
+    
+    function backArriere(){
+        const menubtnarriere = document.querySelector('.retourner-arriere');
+        if(menubtnarriere){
+            menubtnarriere.addEventListener('click', () => {
+                history.back();
+            });
+        }
+    }
+
+    const voirsixmenu = document.querySelector('.voirmenu')
+    voirsixmenu.addEventListener('click', () => { 
+        document.getElementById('nos-restaurants_section').scrollIntoView();
+    });
+    
+    backArriere();
+    menuAccueil();
 });

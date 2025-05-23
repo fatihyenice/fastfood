@@ -365,8 +365,70 @@ nav {
 
 #home,
 #order,
-#searchresto {
+#searchresto,
+#detail-menu {
   margin-top: 50px;
+}
+
+#detail-menu {
+  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+}
+
+.container-menu {
+  padding-top: 100px;
+}
+
+.container-deux {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-image {
+  width: 100%;
+  height: 500px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border-radius: 10px;
+  align-self: start;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.menu-detail {
+  width: 100%;
+  padding: 0px 50px;
+  border-radius: 10px;
+  border-left: 1px solid #dedede;
+  border-right: 1px solid #dedede;
+  align-self: start;
+}
+
+.menu-detail > h1 {
+  color: var(--secondaire-text-color);
+  margin-bottom: 20px;
+}
+
+.retourner-arriere {
+  font-size: 3em;
+  color: var(--header-color);
+  &:hover {
+    cursor: pointer;
+    opacity: 0.6;
+    display: inline;
+  }
+}
+
+.alerte-erreur {
+  color: rgba(255, 0, 0, 0.5); /* Rouge transparent à 50% */
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  margin-top: 100px;
 }
 
 /* RESPONSIVE DESIGN */
@@ -377,6 +439,25 @@ nav {
 
   nav {
     width: 100%;
+  }
+
+  .menu-image {
+    background-position: center;
+  }
+
+  .container-menu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    padding-top: 100px;
+  }
+
+  .container-deux {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
   }
 
   #nos-restaurants_section h2 {
