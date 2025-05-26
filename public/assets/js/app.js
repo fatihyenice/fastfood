@@ -102,6 +102,30 @@ document.addEventListener('DOMContentLoaded', () => {
     voirsixmenu.addEventListener('click', () => { 
         document.getElementById('nos-restaurants_section').scrollIntoView();
     });
+
+    const categorie = document.querySelectorAll(".categorie");
+    if(categorie){
+        categorie.forEach(categorie => {
+            categorie.addEventListener("click", () => {
+                showLoader(400); 
+                
+                const categorieid = categorie.getAttribute('data-categorie-id');
+                const formdatap = new FormData();
+                formdatap.append("categorie-id", categorieid);
+                
+                fetch("/fetch/recupererDetailProduitCategorie.php", {
+                    method: "POST",
+                    body: formdatap
+                })
+                .then(response => response.text())
+                .then(data => {
+                     document.querySelector("#produit-categorie").innerHTML = data;
+                });
+
+                location.hash = "produit-categorie";
+            });
+        });
+    }
     
     backArriere();
     menuAccueil();
