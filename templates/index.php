@@ -57,6 +57,8 @@
         </section>
     </section>
 
+    <?php require_once "footer.php"; ?>
+
     <?php require_once "page_detail_menu.php"; ?>
     <?php require_once "page_ensembleproduits.php"; ?>
     <?php require_once "page_nosproduits.php"; ?>

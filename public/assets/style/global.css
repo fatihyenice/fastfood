@@ -369,7 +369,7 @@ nav {
 #detail-menu,
 #nosproduits,
 #produit-categorie {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 #detail-menu {
@@ -590,6 +590,14 @@ nav {
 .selected-categorie {
   background: var(--header-color);
   color: #fff !important;
+}
+
+.ingredient {
+  font-weight: bold;
+}
+
+.ingredientliste {
+  list-style-type: none !important;
 }
 
 @media (min-width: 760px) {

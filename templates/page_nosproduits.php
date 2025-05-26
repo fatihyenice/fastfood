@@ -9,7 +9,7 @@ require_once "../config/functions.php";
         <?php
         foreach ($getCategorie as $categorie) {
         ?>
-            <div class="categorie" data-aos="zoom-in" data-categorie-id="<?= intval($categorie['categorie_id']); ?>">
+            <div class="categorie" data-aos="zoom-in-down" data-categorie-id="<?= intval($categorie['categorie_id']); ?>">
                 <div class="categorie-image" style="background-image: url(<?= !empty($categorie["urlimage_categorie"]) ? hsc($categorie['urlimage_categorie']) : "/assets/images/undefined.png" ?>);">
                     <div class="categorie-title">
                         <?= hsc($categorie['nom_categorie']); ?>
