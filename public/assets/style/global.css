@@ -553,14 +553,10 @@ nav {
   line-height: 50px;
   padding: 0px 10px;
   &:hover {
-    background: #ecf0f1;
     height: 50px;
     padding: 0px 10px;
+    cursor: pointer;
   }
-}
-
-.navigation-categorie ul a {
-  text-decoration: none;
 }
 
 .produit-container {
@@ -583,10 +579,11 @@ nav {
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
   transition: all 0.2s;
   &:hover {
-    background: #ecf0f1;
+    background: var(--boutton-color);
     cursor: pointer;
+    color: #fff;
     transition: all 0.2s;
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
 }
 

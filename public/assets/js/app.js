@@ -120,13 +120,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.text())
                 .then(data => {
                      document.querySelector("#produit-categorie").innerHTML = data;
+                     navbarCategorie();
                 });
 
                 location.hash = "produit-categorie";
             });
         });
     }
+
+    function navbarCategorie(){
+        const navbarCat = document.querySelectorAll(".navigation-container > ul li");
+        navbarCat.forEach(liencategorie => {
+            liencategorie.addEventListener("click", () => {
+                const catId = liencategorie.getAttribute("data-navcatid");
+
+                const formdatanav = new FormData();
+                formdatanav.append("categorie-id", catId);
+                
+                fetch("/fetch/recupererDetailProduitCategorie.php", {
+                    method: "POST",
+                    body: formdatanav
+                })
+                .then(response => response.text())
+                .then(data => {
+                     document.querySelector("#produit-categorie").innerHTML = data;
+                     navbarCategorie();
+                });
+            });
+        });
+    }
     
+    navbarCategorie();
     backArriere();
     menuAccueil();
 });

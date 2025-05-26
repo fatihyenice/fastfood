@@ -13,9 +13,7 @@ $getCategorie = $reqCategorie->fetchAll()
             <?php
             foreach ($getCategorie as $categorie) {
             ?>
-                <a href="#">
-                    <li class="<?= ($categorie["categorie_id"] == intval($_POST['categorie-id'])) ? "selected-categorie" : "" ?>"><?= hsc($categorie['nom_categorie']); ?></li>
-                </a>
+                <li data-navcatid="<?= intval($categorie["categorie_id"]); ?>" class="<?= ($categorie["categorie_id"] ==  intval($_POST['categorie-id'])) ? "selected-categorie" : "" ?>"><?= hsc($categorie['nom_categorie']); ?></li>
             <?php } ?>
         </ul>
     </div>

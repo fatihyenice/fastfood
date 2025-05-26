@@ -7,9 +7,7 @@
                 <?php
                 foreach ($getCategorie as $categorie) {
                 ?>
-                    <a href="#">
-                        <li class="<?= ($categorie["categorie_id"] == 1) ? "selected-categorie" : "" ?>"><?= hsc($categorie['nom_categorie']); ?></li>
-                    </a>
+                    <li data-navcatid="<?= intval($categorie["categorie_id"]); ?>" class="<?= ($categorie["categorie_id"] == 1) ? "selected-categorie" : "" ?>"><?= hsc($categorie['nom_categorie']); ?></li>
                 <?php } ?>
             </ul>
         </div>
@@ -19,7 +17,7 @@
         <?php
 
         if (empty($idCategorie)) {
-            $idCategorie = 100;
+            $idCategorie = 1;
         }
 
         if (!empty($idCategorie)) {
