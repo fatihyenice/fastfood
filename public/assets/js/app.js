@@ -149,8 +149,120 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    function ouvrirMenuBurger(){ 
+        const navbar = document.getElementById("navigation");
+        const isActive = navbar.classList.toggle("nav-burger_active");
+            document.querySelector(".icon-burger").style.justifyContent = isActive ? "end" : "center";     
+            document.querySelector(".icon-burger").querySelector("i").classList.replace(isActive ? "ri-menu-line" : "ri-close-large-line", isActive ? "ri-close-large-line" : "ri-menu-line") 
+    }
+
+    const boutonBurgerMenu = document.querySelector(".icon-burger");
+
+    if(boutonBurgerMenu){
+        boutonBurgerMenu.addEventListener("click", function() { 
+            ouvrirMenuBurger();
+        });
+    } 
+    
+    window.document.body.addEventListener('click', (e) => {
+        const navbar = document.getElementById("navigation");
+        const isActive = navbar.classList.contains("nav-burger_active"); 
+
+        if (isActive && !e.target.closest("#navigation") && !e.target.closest(".icon-burger")) {
+          ouvrirMenuBurger();  
+        }
+    }); 
+
+    function refreshConnexion(){
+        fetch("/fetch/refresh/refreshConnexion.php", {
+            method: "POST", 
+        })
+        .then(response => response.text())
+        .then(data => {
+             document.querySelector("#order").innerHTML = data; 
+             connexion();
+        });
+    }
+
+    function refreshHeader(){
+        fetch("/fetch/refresh/refreshHeader.php", {
+            method: "POST", 
+        })
+        .then(response => response.text())
+        .then(data => {
+             document.querySelector("#navigation").innerHTML = data; 
+             deconnexion();
+        });
+    }
+
+    function connexion(){
+        const btnConnexion = document.getElementById("btn-connexion");
+        if(btnConnexion){
+            btnConnexion.addEventListener("click", function() {
+                    showLoader(100); 
+    
+                    const mail = document.getElementById("mail").value;
+                    const mdp = document.getElementById("motdepasse").value;
+                    const erreurform = document.querySelector(".erreurform");
+                    const successform = document.querySelector(".successform");
+    
+                    erreurform.classList.remove("active");
+                    successform.classList.remove("active"); 
+                    
+                    setTimeout(function(){
+    
+                        let form = {
+                            mail: mail,
+                            mdp: mdp,
+                        }
+                           
+                        fetch("/fetch/connexion.php", {
+                            method: "POST",
+                            body: JSON.stringify(form)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.status == "error"){
+                                erreurform.classList.add("active");
+                                erreurform.innerText = data.message;
+                            }else{
+                                successform.classList.add("active");
+                                successform.innerText = data.message;
+    
+                                setTimeout(function(){
+                                    refreshConnexion();
+                                    refreshHeader();
+                                }, 400)
+                            } 
+                        })
+    
+                    }, 100);
+            });
+        }   
+    }
+
+    function deconnexion(){
+        const btnDeconnexion = document.getElementById("logoutbtn");
+        btnDeconnexion.addEventListener('click', () => {
+            showLoader(300);  
+                fetch("/fetch/deconnexion.php", {
+                    method: "POST", 
+                })
+                .then(response => response.text())
+                .then(data => {
+                    refreshConnexion();
+                    refreshHeader();
+
+                    location.hash = "order";
+                }); 
+        });
+    } 
     
     navbarCategorie();
     backArriere();
     menuAccueil();
+    connexion();
+    deconnexion();
+    refreshHeader();
 });
