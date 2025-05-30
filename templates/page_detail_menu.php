@@ -10,7 +10,7 @@
     if (!empty($_POST['id-produits'])) {
         $id_produits = intval($_POST['id-produits']);
 
-        $reqIdProduits = $bdd->prepare('SELECT * FROM produits prod INNER JOIN integrer inte ON prod.id_produits = inte.id_produits INNER JOIN aliments alim ON inte.id_aliment = alim.id_aliment WHERE prod.id_produits = :idproduits');
+        $reqIdProduits = $bdd->prepare('SELECT * FROM produits prod LEFT JOIN integrer inte ON prod.id_produits = inte.id_produits LEFT JOIN aliments alim ON inte.id_aliment = alim.id_aliment WHERE prod.id_produits = :idproduits');
         $reqIdProduits->bindValue(":idproduits", $id_produits);
         $reqIdProduits->execute();
 
@@ -35,7 +35,12 @@
                         <p class="ingredient">Ingrédients:<br><br>
                             <?php
                             foreach ($recupererProduits as $ingredients) {
-                                echo "<li class='ingredientliste'><i class='ri-restaurant-2-line'></i> " . hsc($ingredients['nom_aliment'])  . (($ingredients['retirable'] == 1) ? ' (amovible)' : '') . " </li><br>";
+                                if (!empty($ingredients['nom_aliment'])) {
+                                    echo "<li class='ingredientliste'><i class='ri-restaurant-2-line'></i> "
+                                        . hsc($ingredients['nom_aliment'])
+                                        . (($ingredients['retirable'] == 1) ? ' (amovible)' : '')
+                                        . " </li><br>";
+                                }
                             }
                             ?>
 

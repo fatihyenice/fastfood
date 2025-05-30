@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Chewy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 
 /* Variables globales */
 :root {
@@ -78,7 +79,7 @@ header .logo {
 
 /* NAVIGATION */
 nav {
-  background: #ffffffc9;
+  background: #ffffffee;
   height: var(--nav-height);
   padding: 10px;
   position: sticky;
@@ -383,13 +384,19 @@ nav {
   }
 }
 
-#home,
+.btn-register {
+  color: var(--header-color);
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
 #order,
 #searchresto,
 #detail-menu,
-#nosproduits,
-#produit-categorie {
-  margin-top: 25px;
+#nosproduits {
+  margin-top: 50px;
 }
 
 #detail-menu {
@@ -675,6 +682,14 @@ nav {
   background: var(--body-color);
 }
 
+.login-section.active {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  background: var(--body-color);
+}
+
 .login-container {
   background: #fff;
   padding: 40px;
@@ -744,6 +759,91 @@ nav {
   text-decoration: underline;
 }
 
+.register-section {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  background: var(--body-color);
+}
+
+.register-section.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  background: var(--body-color);
+}
+
+.register-container {
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+}
+
+.register-title {
+  font-family: "Chewy", cursive;
+  color: var(--header-color);
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.2s ease-in-out;
+}
+
+.register-form input:focus {
+  border-color: var(--header-color);
+}
+
+.register-form button {
+  background: var(--header-color);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: "Chewy", cursive;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.register-form button:hover {
+  background: rgba(227, 1, 23, 0.7);
+}
+
+.register-note {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: var(--secondaire-text-color);
+}
+
+.register-note .btn-login {
+  color: var(--header-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-note .btn-login:hover {
+  text-decoration: underline;
+}
+
 .banniere-connexion {
   background: url(../../assets/images/connexion.png);
   width: 100%;
@@ -751,6 +851,146 @@ nav {
   background-size: 40%;
   background-position: center -130px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.panier-bottom {
+  background: #fff;
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  box-shadow: 2px -2px 2px 1px rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  left: 0;
+}
+
+.btn-validerpanier {
+  background: #198737;
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  font-family: "Chewy";
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 1em;
+  &:hover {
+    cursor: pointer;
+    background: rgba(35, 186, 75, 0.784);
+  }
+}
+
+.btn-suivant {
+  background: var(--header-color);
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  font-family: "Chewy";
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 1em;
+  opacity: 0.2;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+.btn-suivant.choixfait {
+  background: var(--header-color);
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  font-family: "Chewy";
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 1em;
+  opacity: 1;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+
+.box-restau {
+  background: #fff;
+  width: 100%;
+  padding: 10px;
+  max-width: 980px;
+  margin: 100px auto;
+  border-radius: 5px;
+  border: 1px solid #dedede;
+}
+
+.box-restau > h1 {
+  text-align: center;
+  color: var(--nav-a-color);
+  text-transform: uppercase;
+  font-family: "Titillium Web", sans-serif;
+  letter-spacing: 8px;
+  font-weight: normal;
+}
+
+.box-restau form {
+  display: flex;
+  flex-direction: column;
+}
+
+.box-restau form input {
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  background: #ecf0f1;
+  outline: none;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 1.1em;
+}
+
+#resultat-restau {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+input[name="restaurant"] {
+  display: none;
+}
+
+input[name="restaurant"] + label {
+  background: var(--nav-a-color);
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+input[name="restaurant"]:checked + label {
+  background: #198737;
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+input[name="restaurant"]:checked + label::after {
+  content: "✅";
 }
 
 @media (min-width: 760px) {
@@ -770,6 +1010,58 @@ nav {
 @media (min-width: 980px) {
   header {
     width: 40%;
+  }
+
+  .btn-suivant.choixfait {
+    background: var(--header-color);
+    width: 100%;
+    color: #fff;
+    padding: 10px;
+    font-family: "Chewy";
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.7em;
+    opacity: 1;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  .btn-validerpanier {
+    background: #198737;
+    width: 100%;
+    color: #fff;
+    padding: 10px;
+    font-family: "Chewy";
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.7em;
+    &:hover {
+      cursor: pointer;
+      background: rgba(35, 186, 75, 0.784);
+    }
+  }
+
+  .btn-suivant {
+    background: var(--header-color);
+    width: 100%;
+    color: #fff;
+    padding: 10px;
+    font-family: "Chewy";
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.7em;
+    opacity: 0.2;
+    &:hover {
+      cursor: not-allowed;
+    }
   }
 
   .banniere_toutproduit {

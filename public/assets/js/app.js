@@ -182,6 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
              document.querySelector("#order").innerHTML = data; 
              connexion();
+             registerBtn();
+             loginBtn();
+             registerValidation();
+             recherche();
         });
     }
 
@@ -244,25 +248,189 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deconnexion(){
         const btnDeconnexion = document.getElementById("logoutbtn");
-        btnDeconnexion.addEventListener('click', () => {
-            showLoader(300);  
-                fetch("/fetch/deconnexion.php", {
-                    method: "POST", 
-                })
-                .then(response => response.text())
-                .then(data => {
-                    refreshConnexion();
-                    refreshHeader();
+        if(btnDeconnexion){
+            btnDeconnexion.addEventListener('click', () => {
+                showLoader(300);  
+                    fetch("/fetch/deconnexion.php", {
+                        method: "POST", 
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        refreshConnexion();
+                        refreshHeader();
 
-                    location.hash = "order";
-                }); 
-        });
+                        location.hash = "order";
+                    }); 
+            });
+        }
     } 
+
+    function registerBtn(){
+        const btnregister = document.querySelector(".btn-register");
+        const registerSection = document.querySelector(".register-section");
+        const loginSection = document.querySelector(".login-section");
+        if(btnregister){ 
+            btnregister.addEventListener("click", () => {
+                registerSection.classList.toggle("active");
+                loginSection.classList.toggle('active');
+            });
+        }
+    }
+
+    function loginBtn(){
+        const btnlogin = document.querySelector(".btn-login");
+        const registerSection = document.querySelector(".register-section");
+        const loginSection = document.querySelector(".login-section");
+        if(btnlogin){ 
+            btnlogin.addEventListener("click", () => {
+                registerSection.classList.toggle("active");
+                loginSection.classList.toggle('active');
+            });
+        }
+    }
+
+    function registerValidation() {
+        const btninscription = document.querySelector("#btn-register");
+        if(btninscription){
+            btninscription.addEventListener("click", () => {
+                const nom = document.getElementById("nom").value;
+                const prenom = document.getElementById("prenom").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirm-password").value;
+                const erreurform = document.querySelector(".erreurform");
+                const successform = document.querySelector(".successform");
+    
+                erreurform.classList.remove("active");
+                successform.classList.remove("active"); 
+                
+                const donnees = {
+                    nom: nom,
+                    prenom: prenom,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword,
+                }
+                
+                showLoader(300);  
+
+                setTimeout(function(){
+                    fetch("/fetch/inscription.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(donnees)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status == "error"){
+                            erreurform.classList.add("active");
+                            erreurform.innerText = data.message;
+                        }else{
+                            successform.classList.add("active");
+                            successform.innerText = data.message;  
+                            
+                            document.querySelector(".register-form").reset();
+                        } 
+                    }) 
+                }, 300);
+            });
+        }
+    }
+
+    function recherche(){
+        const inputville = document.getElementById("nomville");
+
+        if(inputville){
+            inputville.addEventListener('input', () => {
+                if(inputville.value.length > 2){
+                    showLoader(10);  
+
+                    const formData = new FormData();
+                    formData.append("ville", inputville.value);
+
+                    setTimeout(function(){
+                        fetch("/fetch/restaurant.php", {
+                            method: "POST", 
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById("resultat-restau").innerHTML = data;
+                            choixRestaurant();
+                        }) 
+                    }, 300);
+                }else{
+                    document.querySelectorAll("input[name='restaurant'], input[name='restaurant'] + label").forEach(e => e.remove())
+                }
+            });
+        }
+    }
+
+    function choixRestaurant(){
+        const restaurants = document.querySelectorAll("input[name='restaurant']");
+        const btnsuivant = document.querySelector(".btn-suivant");
+        let selectedRestaurant = null;
+        let nomRestaurant = null;
+
+        if (restaurants && btnsuivant) { 
+
+            restaurants.forEach(inputRadio => {
+                inputRadio.addEventListener("click", () => {
+                    if (inputRadio.checked) {
+                        selectedRestaurant = inputRadio.value;
+                        nomRestaurant = inputRadio.nextElementSibling.innerText; 
+                        btnsuivant.classList.add("choixfait");  
+                    }
+                });
+            });
+     
+            btnsuivant.addEventListener("click", () => {
+
+                Swal.fire({
+                    title: "Etes-vous sûr ?",
+                    text: "Vous avez choisis le restaurant " + nomRestaurant,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Oui, je suis sûr !",
+                    cancelButtonText: "Non, je veux changer de restaurant",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (selectedRestaurant) {
+                            const form = new FormData();
+                            form.append("restaurant", selectedRestaurant);
+            
+                            fetch("/fetch/commandeschoix.php", {
+                                method: "POST",
+                                body: form
+                            })
+                            .then(response => response.text())
+                            .then(data => {
+                                if (data.trim() === "ok") {
+                                    refreshConnexion();
+                                }
+                            });
+                        } else {
+                            alert("Veuillez choisir un restaurant.");
+                        } 
+                    }
+                  });
+                
+            });
+        }
+    }
     
     navbarCategorie();
     backArriere();
     menuAccueil();
     connexion();
-    deconnexion();
-    refreshHeader();
+    deconnexion(); 
+    refreshConnexion();
+    registerBtn();
+    loginBtn();
+    registerValidation();
+    recherche();
 });
