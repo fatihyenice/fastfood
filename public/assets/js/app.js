@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function ouvrirMenuBurger(){ 
         const navbar = document.getElementById("navigation");
         const isActive = navbar.classList.toggle("nav-burger_active");
-            document.querySelector(".icon-burger").style.justifyContent = isActive ? "end" : "center";     
+            document.querySelector(".icon-burger").style.justifyContent = isActive ? "end" : "end";    
+            navbar.style.zIndex = "999999899 !important"; 
             document.querySelector(".icon-burger").querySelector("i").classList.replace(isActive ? "ri-menu-line" : "ri-close-large-line", isActive ? "ri-close-large-line" : "ri-menu-line") 
     }
 
@@ -186,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
              loginBtn();
              registerValidation();
              recherche();
+             updateProduitCommande();
+             refreshBouttonPanier();
         });
     }
 
@@ -201,9 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function connexion(){
-        const btnConnexion = document.getElementById("btn-connexion");
+        const btnConnexion = document.querySelector(".login-form");
         if(btnConnexion){
-            btnConnexion.addEventListener("click", function() {
+            btnConnexion.addEventListener("submit", function(e) {
+                e.preventDefault();
                     showLoader(100); 
     
                     const mail = document.getElementById("mail").value;
@@ -290,9 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function registerValidation() {
-        const btninscription = document.querySelector("#btn-register");
+        const btninscription = document.querySelector(".register-form");
         if(btninscription){
-            btninscription.addEventListener("click", () => {
+            btninscription.addEventListener("submit", (e) => {
+                e.preventDefault();
                 const nom = document.getElementById("nom").value;
                 const prenom = document.getElementById("prenom").value;
                 const email = document.getElementById("email").value;
@@ -368,41 +373,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function choixRestaurant(){
+    function choixRestaurant() {
         const restaurants = document.querySelectorAll("input[name='restaurant']");
         const btnsuivant = document.querySelector(".btn-suivant");
         let selectedRestaurant = null;
         let nomRestaurant = null;
-
-        if (restaurants && btnsuivant) { 
-
+    
+        if (restaurants && btnsuivant) {
             restaurants.forEach(inputRadio => {
                 inputRadio.addEventListener("click", () => {
                     if (inputRadio.checked) {
                         selectedRestaurant = inputRadio.value;
-                        nomRestaurant = inputRadio.nextElementSibling.innerText; 
-                        btnsuivant.classList.add("choixfait");  
+                        nomRestaurant = inputRadio.nextElementSibling.innerText;
+                        btnsuivant.classList.add("choixfait");
                     }
                 });
             });
-     
+    
             btnsuivant.addEventListener("click", () => {
-
-                Swal.fire({
-                    title: "Etes-vous sûr ?",
-                    text: "Vous avez choisis le restaurant " + nomRestaurant,
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Oui, je suis sûr !",
-                    cancelButtonText: "Non, je veux changer de restaurant",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                        if (selectedRestaurant) {
+                if (!selectedRestaurant) {
+                    alert("Veuillez d'abord choisir un restaurant.");
+                    return;
+                }else{ 
+                    Swal.fire({
+                        title: "Êtes-vous sûr ?",
+                        text: "Vous avez choisi le restaurant " + nomRestaurant,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Oui, je suis sûr !",
+                        cancelButtonText: "Non, je veux changer de restaurant",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
                             const form = new FormData();
                             form.append("restaurant", selectedRestaurant);
-            
+        
                             fetch("/fetch/commandeschoix.php", {
                                 method: "POST",
                                 body: form
@@ -413,15 +419,49 @@ document.addEventListener('DOMContentLoaded', () => {
                                     refreshConnexion();
                                 }
                             });
-                        } else {
-                            alert("Veuillez choisir un restaurant.");
-                        } 
-                    }
-                  });
-                
+                        }
+                    });
+                }
             });
         }
+    }    
+
+    function updateProduitCommande(){
+        const menulatteralli = document.querySelectorAll(".menulatteral ul li");
+        menulatteralli.forEach(choix => {
+            choix.addEventListener("click", () => {
+                const dataCat = choix.getAttribute("data-catidcommande");
+                const donnee = new FormData();
+                donnee.append("id", dataCat);
+
+                fetch("/fetch/recupererDetailPageCommande.php", {
+                    method: "POST",
+                    body: donnee
+                })
+                .then(response => response.text())
+                .then(data => {
+                    refreshBouttonPanier();
+                    document.querySelector('.produit-commande').innerHTML = data;
+                })
+            });
+        });
     }
+
+    function refreshBouttonPanier(){
+        const userdonnee = new FormData();
+        userdonnee.append("userid", document.querySelector(".btn-validerpanier").getAttribute("datauserId"));
+        fetch("/fetch/refresh/refreshBtnPanier.php", {
+            method: "POST",
+            body: userdonnee
+        })
+        .then(response => response.text())
+        .then(data => {
+            if(data){
+                document.querySelector('.panier-bottom').innerHTML = data;
+            }
+        })
+    } 
+ 
     
     navbarCategorie();
     backArriere();
@@ -433,4 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loginBtn();
     registerValidation();
     recherche();
+    updateProduitCommande();
+    refreshBouttonPanier();
 });

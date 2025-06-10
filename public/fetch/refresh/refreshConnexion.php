@@ -2,6 +2,16 @@
 require_once __DIR__ . "/../../../config/db_connect.php";
 require_once __DIR__ . "/../../../config/functions.php";
 session_start();
+$reqCategorie = $bdd->query('SELECT * FROM categorie_produits');
+$getCategorie = $reqCategorie->fetchAll();
+
+if (!empty($_SESSION['auth'])) {
+    $requeteUser = $bdd->prepare('SELECT * FROM utilisateur WHERE mail = :myemail');
+    $requeteUser->bindValue(":myemail", $_SESSION['auth']);
+    $requeteUser->execute();
+
+    $user = $requeteUser->fetch();
+}
 ?>
 
 <?php if (empty($_SESSION['auth'])) { ?>
@@ -42,7 +52,7 @@ session_start();
     if (!empty($_SESSION['restaurant'])) {
     ?>
         <div class="panier-bottom">
-            <div class="btn-validerpanier">
+            <div class="btn-validerpanier desactive" datauserId="<?= intval($user['Id_utilisateur']); ?>">
                 Valider mon panier
             </div>
         </div>
@@ -70,10 +80,50 @@ session_start();
             </div>
         </div>
     <?php } else { ?>
-        <div id="etapeChoixRestau">
-            <div class="box-restau">
-                <h1>COMMANDES</h1> 
+
+        <div class="disposition">
+            <div class="barrelateral">
+                <div class="menulatteral">
+                    <ul>
+                        <?php
+                        foreach ($getCategorie as $categorie) {
+                        ?>
+                            <li data-catidcommande="<?= hsc($categorie['categorie_id']); ?>"><i class="ri-file-list-3-line"></i> <?= hsc($categorie['nom_categorie']); ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="produit-commande">
+                <?php
+                if (empty($_POST['id'])) {
+                    $id = 1;
+                }
+
+                if (!empty($_POST['id'])) {
+                    $id = intval($_POST['id']);
+
+                    $reqVerifierCategorie = $bdd->prepare('SELECT * FROM categorie_produits cat INNER JOIN produits prod ON cat.categorie_id = prod.categorie_id WHERE cat.categorie_id = :idcat');
+                    $reqVerifierCategorie->bindValue(":idcat", $id);
+                    $reqVerifierCategorie->execute();
+
+
+                    $categorieExistant = $reqVerifierCategorie->rowCount();
+
+                    if ($categorieExistant > 0) {
+                        $produits = $reqVerifierCategorie->fetchAll();
+                        foreach ($produits as $produit) {  ?>
+                            <div class="produit" data-aos="fade-down">
+                                <h2><?= hsc($produit['nom_produits']); ?></h2>
+                                <div class="produit-image" data-detailcommande-produit-id="<?= hsc($produit['id_produits']); ?>" style="background-image: url( <?= hsc($produit['urlimage_produits']); ?>)"></div>
+                            </div>
+                <?php
+                        }
+                    }
+                }
+                ?>
             </div>
         </div>
+
     <?php } ?>
 <?php } ?>
